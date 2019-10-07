@@ -1,3 +1,4 @@
 string object #Vision object to look for
+string camera #Camera name to use
 ---
 string object #Vision object it is configured to look for
