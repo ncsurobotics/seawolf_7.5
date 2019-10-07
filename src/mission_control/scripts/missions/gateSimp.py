@@ -71,5 +71,3 @@ class GateSimp(object):
     
     
     return self.runtime > (time.time() - self.time)
-    
-  
