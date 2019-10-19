@@ -10,7 +10,6 @@ project(mission_control)
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
-  smach
   serial
 )
 
@@ -106,7 +105,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES mission_control
-#  CATKIN_DEPENDS roscpp rospy smach
+  CATKIN_DEPENDS roscpp rospy
 #  DEPENDS system_lib
 )
 
