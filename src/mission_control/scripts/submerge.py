@@ -59,7 +59,7 @@ imuSub = rospy.Subscriber("imu_sub", Vector3, imu_cb)
 targetOrientationSub = rospy.Subscriber("orientation_target", Vector3, orientation_target_cb)
 
 #ROS Publisher
-thrusterPub = rospy.Publisher("thruster_pub", Twist, queue_size=3)
+thrusterPub = rospy.Publisher("thruster_cmd_vel", Twist, queue_size=3)
 
 #Called to tell subscribers to constantly look for msgs
 
