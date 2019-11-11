@@ -10,7 +10,7 @@ project(mission_control)
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
-  serial
+  serial_wolf
 )
 
 ## System dependencies are found with CMake's conventions

@@ -1,0 +1,46 @@
+import rospy
+from std_msgs.msg import String
+import serial
+
+​
+def readImuTalker():
+    pub = rospy.Publisher('chatter', String, queue_size=10)
+    rospy.init_node('readImuTalker', anonymous=True)
+    # rate = rospy.Rate(10) # 10hz #i don't know if want this in here but I kept it just in case
+​while not rospy.is_shutdown():
+    
+    imu = serial.Serial("/dev/ttyUSB0", baudrate=57600)
+
+    imu.readline()
+
+    imu.flush()
+
+    while True:
+
+        imu.readline()
+
+        for str in imu:
+
+            imu_str=str.strip("#YPR=")
+
+            imu_str=imu_str.strip("\r\n")
+
+            imu_str.split(",")
+
+            rospy.loginfo(imu_str) # should log the serial data retrieved
+
+            pub.publish(imu_str) #should print the serial data retrieved
+
+  #rate.sleep() #again kept just in case
+
+  
+
+  if __name__ == '__main__':
+
+    try:
+
+      readImuTalker()
+
+    except rospy.ROSInterruptException:
+
+      pass
