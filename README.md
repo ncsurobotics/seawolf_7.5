@@ -2,8 +2,8 @@
 converting seawolf 7 into ROS
 
 ## Software Depedencies
-Ubuntu 16.04
-ROS Kinetic
+* Ubuntu 16.04
+* ROS Kinetic
 
 ## Building
 
