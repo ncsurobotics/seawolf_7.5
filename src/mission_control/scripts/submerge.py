@@ -59,7 +59,8 @@ imuSub = rospy.Subscriber("imu_sub", Vector3, imu_cb)
 targetOrientationSub = rospy.Subscriber("orientation_target", Vector3, orientation_target_cb)
 
 #ROS Publisher
-thrusterPub = rospy.Publisher("thruster_cmd_vel", Twist, queue_size=3)
+#thrusterPub = rospy.Publisher("thruster_cmd_vel", Twist, queue_size=3)
+thrusterPub = rospy.Publisher("thruster_values", Float64MultiArray, queue_size=3)
 
 #Called to tell subscribers to constantly look for msgs
 
@@ -74,7 +75,7 @@ while not rospy.is_shutdown():
     loop_rate.sleep()
     continue
 
-  thrusterMsg = Twist()
+  thrusterCmd = Float64MultiArray()
 
   depth_error = target_depth - depth
   depth_error_integral += depth_error*dt
@@ -87,13 +88,15 @@ while not rospy.is_shutdown():
   z_output = depth_pid[0]*depth_error + depth_pid[1]*depth_error_integral + depth_pid[2]*depth_error_derivative
   rpy_output = rpy_pid[0]*rpy_error + rpy_pid[1]*rpy_error_integral + rpy_pid[2]*rpy_error_derivative
 
-  thrusterMsg.linear.x = 0
-  thrusterMsg.linear.y = 0
-  thrusterMsg.linear.y = z_output
-  thrusterMsg.angular.x = rpy_output[0]
-  thrusterMsg.angular.y = rpy_output[1]
-  thrusterMsg.angular.z = rpy_output[2]
-  thrusterPub.publish(thrusterMsg)
+  thrusterCmd.data = [0.0, 0.0, -200-depth_error-pitch*rpy[1]*6, -200-depth_error+pitch*rpy[1]*6, rpy[0]*5]
+  thrusterPub.publish(thrusterCmd)
+  #thrusterMsg.linear.x = 0
+  #thrusterMsg.linear.y = 0
+  #thrusterMsg.linear.y = z_output
+  #thrusterMsg.angular.x = rpy_output[0]
+  #thrusterMsg.angular.y = rpy_output[1]
+  #thrusterMsg.angular.z = rpy_output[2]
+  #thrusterPub.publish(thrusterMsg)
 
   last_depth_error = depth_error
   last_rpy_error = rpy_error
